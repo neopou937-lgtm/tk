@@ -1,5 +1,4 @@
 import { Link } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
 import { home } from '@/routes';
 import type { AuthLayoutProps } from '@/types';
 
@@ -17,8 +16,12 @@ export default function AuthSimpleLayout({
                             href={home()}
                             className="flex flex-col items-center gap-2 font-medium"
                         >
-                            <div className="mb-1 flex size-12 items-center justify-center rounded-[8px] bg-sky-600 text-white shadow-sm">
-                                <ShieldCheck className="size-7" />
+                            <div className="mb-1 flex size-14 items-center justify-center rounded-[8px] border border-sky-100 bg-white p-1.5 shadow-sm">
+                                <img
+                                    src="/images/logo-tk-asy-syahidiyyah.png"
+                                    alt="Logo TK Asy-Syahidiyyah"
+                                    className="size-full object-contain"
+                                />
                             </div>
                             <span className="text-center text-sm font-bold text-slate-950">
                                 PAUD Asy-Syahidiyyah

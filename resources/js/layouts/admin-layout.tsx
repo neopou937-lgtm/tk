@@ -6,7 +6,6 @@ import {
     LogOut,
     Menu,
     Search,
-    ShieldCheck,
     X,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -188,8 +187,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 function AdminBrand({ compact = false }: { compact?: boolean }) {
     return (
         <div className={cn('flex items-center gap-3 p-4', compact && 'py-3')}>
-            <div className="grid size-11 place-items-center rounded-[8px] bg-sky-600 text-white shadow-sm">
-                <ShieldCheck className="size-6" />
+            <div className="grid size-12 place-items-center rounded-[8px] border border-sky-100 bg-white p-1 shadow-sm">
+                <img
+                    src="/images/logo-tk-asy-syahidiyyah.png"
+                    alt="Logo TK Asy-Syahidiyyah"
+                    className="size-full object-contain"
+                />
             </div>
             <div className="min-w-0">
                 <p className="truncate text-sm font-bold text-slate-950">

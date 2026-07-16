@@ -7,7 +7,6 @@ import {
     HeartHandshake,
     LogIn,
     School,
-    ShieldCheck,
     Sparkles,
     WalletCards,
 } from 'lucide-react';
@@ -62,8 +61,12 @@ export default function Welcome() {
                     <div className="relative mx-auto grid min-h-[92vh] max-w-7xl content-center gap-10 px-5 py-6 sm:px-6 lg:grid-cols-[1fr_0.92fr] lg:px-8">
                         <header className="absolute inset-x-5 top-4 flex items-center justify-between sm:inset-x-6 lg:inset-x-8">
                             <Link href="/" className="flex items-center gap-3">
-                                <span className="grid size-11 place-items-center rounded-[8px] bg-white text-sky-700 shadow-sm">
-                                    <ShieldCheck className="size-6" />
+                                <span className="grid size-12 place-items-center rounded-[8px] bg-white p-1 shadow-sm">
+                                    <img
+                                        src="/images/logo-tk-asy-syahidiyyah.png"
+                                        alt="Logo TK Asy-Syahidiyyah"
+                                        className="size-full object-contain"
+                                    />
                                 </span>
                                 <span>
                                     <span className="block text-sm font-bold">
