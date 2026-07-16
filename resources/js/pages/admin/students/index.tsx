@@ -1,5 +1,5 @@
-import { Head, Link } from '@inertiajs/react';
-import { Edit, Plus } from 'lucide-react';
+import { Head, Link, router } from '@inertiajs/react';
+import { Edit, Plus, Trophy } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import type { Student } from '@/types';
 
@@ -14,6 +14,16 @@ const statusLabels: Record<string, string> = {
 };
 
 export default function StudentIndex({ students }: StudentIndexProps) {
+    function graduate(student: Student) {
+        if (!confirm(`Luluskan ${student.name} dan arsipkan ke alumni?`)) {
+            return;
+        }
+
+        router.post(`/admin/students/${student.id}/graduate`, {}, {
+            preserveScroll: true,
+        });
+    }
+
     return (
         <>
             <Head title="Data Siswa" />
@@ -98,13 +108,30 @@ export default function StudentIndex({ students }: StudentIndexProps) {
                                                 </Badge>
                                             </td>
                                             <td className="px-4 py-3 text-right">
-                                                <Link
-                                                    href={`/admin/students/${student.id}/edit`}
-                                                    className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[8px] border border-sky-100 px-3 text-sm font-semibold text-sky-700 hover:bg-sky-50"
-                                                >
-                                                    <Edit className="size-4" />
-                                                    Edit
-                                                </Link>
+                                                <div className="flex justify-end gap-2">
+                                                    {student.status ===
+                                                        'aktif' && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                graduate(
+                                                                    student,
+                                                                )
+                                                            }
+                                                            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[8px] border border-emerald-100 px-3 text-sm font-semibold text-emerald-700 hover:bg-emerald-50"
+                                                        >
+                                                            <Trophy className="size-4" />
+                                                            Luluskan
+                                                        </button>
+                                                    )}
+                                                    <Link
+                                                        href={`/admin/students/${student.id}/edit`}
+                                                        className="inline-flex min-h-10 items-center justify-center gap-2 rounded-[8px] border border-sky-100 px-3 text-sm font-semibold text-sky-700 hover:bg-sky-50"
+                                                    >
+                                                        <Edit className="size-4" />
+                                                        Edit
+                                                    </Link>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))

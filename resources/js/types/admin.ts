@@ -9,6 +9,32 @@ export type AdminStats = {
     alumni: number;
 };
 
+export type AdminColumn = {
+    key: string;
+    label: string;
+    type?: 'text' | 'badge' | 'money';
+};
+
+export type AdminFieldOption = {
+    label: string;
+    value: string;
+};
+
+export type AdminField = {
+    name: string;
+    label: string;
+    type?: 'text' | 'email' | 'number' | 'date' | 'time' | 'datetime-local' | 'textarea' | 'select' | 'file';
+    required?: boolean;
+    colSpan?: number;
+    options?: AdminFieldOption[];
+    urlColumn?: string;
+};
+
+export type AdminRecord = {
+    id: number;
+    [key: string]: unknown;
+};
+
 export type StudentStatus = 'aktif' | 'lulus' | 'nonaktif';
 
 export type Student = {

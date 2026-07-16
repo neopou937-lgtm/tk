@@ -1,48 +1,64 @@
 <?php
 
+use App\Http\Controllers\Admin\AlumniController;
+use App\Http\Controllers\Admin\AnnouncementController;
+use App\Http\Controllers\Admin\BillController;
+use App\Http\Controllers\Admin\BillPaymentController;
+use App\Http\Controllers\Admin\BopTransactionController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DonorController;
+use App\Http\Controllers\Admin\GalleryItemController;
+use App\Http\Controllers\Admin\PpdbApplicationController;
+use App\Http\Controllers\Admin\SavingsTransactionController;
+use App\Http\Controllers\Admin\StudentAttendanceController;
 use App\Http\Controllers\Admin\StudentController;
-use App\Models\Student;
+use App\Http\Controllers\Admin\TeacherAttendanceController;
+use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\TeachingJournalController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::middleware(['auth', 'verified'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
-        Route::get('dashboard', function () {
-            return Inertia::render('admin/dashboard', [
-                'stats' => [
-                    'students' => Student::count(),
-                    'teachers' => 0,
-                    'pendingBills' => 0,
-                    'paidPayments' => 0,
-                    'savings' => 0,
-                    'bopFunds' => 0,
-                    'pendingPpdb' => 0,
-                    'alumni' => Student::where('status', 'lulus')->count(),
-                ],
-            ]);
-        })->name('dashboard');
+        Route::get('dashboard', DashboardController::class)->name('dashboard');
 
         Route::resource('students', StudentController::class)
             ->only(['index', 'create', 'store', 'edit', 'update']);
+        Route::post('students/{student}/graduate', [AlumniController::class, 'graduate'])
+            ->name('students.graduate');
 
-        $placeholders = [
-            'teachers' => 'Data Guru',
-            'ppdb' => 'PPDB',
-            'bills' => 'Tagihan',
-            'savings' => 'Tabungan',
-            'bop-finance' => 'Keuangan BOP',
-            'student-attendance' => 'Absensi Siswa',
-            'teacher-attendance' => 'Absensi Guru',
-            'announcements' => 'Pengumuman',
-            'gallery' => 'Galeri',
-            'alumni' => 'Alumni',
-        ];
+        Route::resource('teachers', TeacherController::class)->except(['show']);
+        Route::resource('ppdb', PpdbApplicationController::class)
+            ->parameters(['ppdb' => 'ppdbApplication'])
+            ->except(['show']);
+        Route::resource('bills', BillController::class)->except(['show']);
+        Route::post('bills/{bill}/midtrans', [BillPaymentController::class, 'createMidtransTransaction'])
+            ->name('bills.midtrans');
+        Route::post('bills/{bill}/mark-paid', [BillPaymentController::class, 'markPaid'])
+            ->name('bills.mark-paid');
 
-        foreach ($placeholders as $uri => $title) {
-            Route::get($uri, fn () => Inertia::render('admin/placeholder', [
-                'title' => $title,
-            ]))->name($uri);
-        }
+        Route::resource('savings', SavingsTransactionController::class)
+            ->parameters(['savings' => 'saving'])
+            ->except(['show']);
+        Route::resource('bop-finance', BopTransactionController::class)
+            ->parameters(['bop-finance' => 'bopFinance'])
+            ->except(['show']);
+        Route::resource('student-attendance', StudentAttendanceController::class)
+            ->parameters(['student-attendance' => 'studentAttendance'])
+            ->except(['show']);
+        Route::resource('teacher-attendance', TeacherAttendanceController::class)
+            ->parameters(['teacher-attendance' => 'teacherAttendance'])
+            ->except(['show']);
+        Route::resource('announcements', AnnouncementController::class)->except(['show']);
+        Route::resource('gallery', GalleryItemController::class)
+            ->parameters(['gallery' => 'gallery'])
+            ->except(['show']);
+        Route::resource('alumni', AlumniController::class)
+            ->parameters(['alumni' => 'alumnus'])
+            ->except(['show']);
+        Route::resource('teaching-journals', TeachingJournalController::class)
+            ->parameters(['teaching-journals' => 'teachingJournal'])
+            ->except(['show']);
+        Route::resource('donors', DonorController::class)->except(['show']);
     });

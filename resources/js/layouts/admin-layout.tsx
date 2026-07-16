@@ -1,8 +1,9 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import {
     Bell,
     ChevronRight,
     Home,
+    LogOut,
     Menu,
     Search,
     ShieldCheck,
@@ -14,6 +15,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { adminNavItems, adminPageTitle } from '@/lib/admin-nav';
 import { cn } from '@/lib/utils';
+import { logout } from '@/routes';
 import type { Auth } from '@/types';
 
 type AdminLayoutProps = {
@@ -29,6 +31,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     const { auth } = props;
     const [drawerOpen, setDrawerOpen] = useState(false);
     const title = adminPageTitle(url);
+    const handleLogout = () => {
+        router.flushAll();
+    };
 
     const initials = useMemo(
         () =>
@@ -112,6 +117,17 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                                     Admin Sekolah
                                 </p>
                             </div>
+                            <Link
+                                href={logout()}
+                                method="post"
+                                as="button"
+                                onClick={handleLogout}
+                                className="grid size-9 place-items-center rounded-[8px] bg-white text-sky-700 shadow-sm transition hover:bg-red-50 hover:text-red-600"
+                                aria-label="Logout admin"
+                                data-test="admin-logout-button"
+                            >
+                                <LogOut className="size-4" />
+                            </Link>
                         </div>
                     </div>
                 </header>

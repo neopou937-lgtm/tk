@@ -6,10 +6,12 @@ use Database\Factories\StudentFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
  * @property int $id
+ * @property string|null $source_firestore_id
  * @property string $name
  * @property string $nipd
  * @property string|null $nisn
@@ -29,14 +31,18 @@ use Illuminate\Support\Carbon;
  * @property string|null $mother_nik
  * @property string|null $mother_phone
  * @property string|null $student_photo_path
+ * @property string|null $student_photo_url
  * @property string|null $family_card_photo_path
+ * @property string|null $family_card_photo_url
  * @property string|null $parent_id_card_photo_path
+ * @property string|null $parent_id_card_photo_url
  * @property string $status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
 #[Fillable([
     'name',
+    'source_firestore_id',
     'nipd',
     'nisn',
     'student_nik',
@@ -55,8 +61,11 @@ use Illuminate\Support\Carbon;
     'mother_nik',
     'mother_phone',
     'student_photo_path',
+    'student_photo_url',
     'family_card_photo_path',
+    'family_card_photo_url',
     'parent_id_card_photo_path',
+    'parent_id_card_photo_url',
     'status',
 ])]
 class Student extends Model
@@ -75,5 +84,21 @@ class Student extends Model
             'birth_date' => 'date',
             'child_order' => 'integer',
         ];
+    }
+
+    /**
+     * @return HasMany<Bill, $this>
+     */
+    public function bills(): HasMany
+    {
+        return $this->hasMany(Bill::class);
+    }
+
+    /**
+     * @return HasMany<SavingsTransaction, $this>
+     */
+    public function savingsTransactions(): HasMany
+    {
+        return $this->hasMany(SavingsTransaction::class);
     }
 }

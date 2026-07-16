@@ -68,9 +68,9 @@ class StudentController extends Controller
         return Inertia::render('admin/students/form', [
             'student' => [
                 ...$student->toArray(),
-                'student_photo_url' => $this->publicUrl($student->student_photo_path),
-                'family_card_photo_url' => $this->publicUrl($student->family_card_photo_path),
-                'parent_id_card_photo_url' => $this->publicUrl($student->parent_id_card_photo_path),
+                'student_photo_url' => $student->student_photo_url ?: $this->publicUrl($student->student_photo_path),
+                'family_card_photo_url' => $student->family_card_photo_url ?: $this->publicUrl($student->family_card_photo_path),
+                'parent_id_card_photo_url' => $student->parent_id_card_photo_url ?: $this->publicUrl($student->parent_id_card_photo_path),
             ],
         ]);
     }

@@ -3,6 +3,7 @@ import {
     Banknote,
     BookOpenCheck,
     CalendarCheck,
+    ClipboardList,
     GraduationCap,
     Image,
     LayoutDashboard,
@@ -11,6 +12,7 @@ import {
     School,
     UserRoundCheck,
     Users,
+    HandHeart,
 } from 'lucide-react';
 import type { NavItem } from '@/types';
 
@@ -74,6 +76,16 @@ export const adminNavItems: NavItem[] = [
         title: 'Alumni',
         href: '/admin/alumni',
         icon: BookOpenCheck,
+    },
+    {
+        title: 'Jurnal Mengajar',
+        href: '/admin/teaching-journals',
+        icon: ClipboardList,
+    },
+    {
+        title: 'Donatur',
+        href: '/admin/donors',
+        icon: HandHeart,
     },
 ];
 
